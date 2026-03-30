@@ -18,6 +18,7 @@ import { ToastService } from '../../../../core/services/toast.service';
   standalone: true,
   imports: [FormsModule, DatePipe],
   templateUrl: './recurring-list.component.html',
+  styleUrl: './recurring-list.component.scss',
 })
 export class RecurringListComponent implements OnInit {
   private recurringService = inject(RecurringService);

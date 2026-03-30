@@ -23,6 +23,7 @@ export interface MonthStat {
   standalone: true,
   imports: [],
   templateUrl: './statistics.component.html',
+  styleUrl: './statistics.component.scss',
 })
 export class StatisticsComponent implements OnInit, OnDestroy {
   private ledgerService = inject(LedgerService);

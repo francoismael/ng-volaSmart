@@ -16,6 +16,7 @@ interface NavItem {
   standalone: true,
   imports: [RouterOutlet, RouterLink, RouterLinkActive, ToastComponent],
   templateUrl: './shell.component.html',
+  styleUrl: './shell.component.scss',
 })
 export class ShellComponent {
   private auth = inject(AuthService);

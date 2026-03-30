@@ -157,15 +157,19 @@
       @if (data()!.operations.length > 0) {
         <tfoot>
           <tr>
-            <td colspan="6" class="vs-tfoot-cell">
-              <div class="vs-table-footer">
-                <span class="vs-table-footer-label">Totaux</span>
-                <span class="vs-amount-debit">{{ formatAmount(data()!.totalDebit) }}</span>
-                <span class="vs-amount-credit">{{ formatAmount(data()!.totalCredit) }}</span>
-                <span [class]="data()!.balance >= 0 ? 'vs-amount-balance-pos' : 'vs-amount-balance-neg'">
-                  {{ formatAmount(data()!.balance) }}
-                </span>
-              </div>
+            <td class="vs-tfoot-cell" colspan="3">
+              <span class="vs-table-footer-label">Totaux</span>
+            </td>
+            <td class="vs-tfoot-cell text-right">
+              <span class="vs-amount-debit">{{ formatAmount(data()!.totalDebit) }}</span>
+            </td>
+            <td class="vs-tfoot-cell text-right">
+              <span class="vs-amount-credit">{{ formatAmount(data()!.totalCredit) }}</span>
+            </td>
+            <td class="vs-tfoot-cell text-right">
+              <span [class]="data()!.balance >= 0 ? 'vs-amount-balance-pos' : 'vs-amount-balance-neg'">
+                {{ formatAmount(data()!.balance) }}
+              </span>
             </td>
           </tr>
         </tfoot>

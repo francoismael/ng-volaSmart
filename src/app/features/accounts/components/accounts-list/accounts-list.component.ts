@@ -9,6 +9,7 @@ import { ToastService } from '../../../../core/services/toast.service';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './accounts-list.component.html',
+  styleUrl: './accounts-list.component.scss',
 })
 export class AccountsListComponent implements OnInit {
   private accountsService = inject(AccountsService);

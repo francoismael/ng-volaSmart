@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   imports: [FormsModule, RouterLink],
   templateUrl: './login.component.html',
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent {
   private auth = inject(AuthService);

@@ -12,6 +12,7 @@ type Period = 'today' | 'week' | 'month' | 'year';
   standalone: true,
   imports: [DatePipe, RouterLink],
   templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
   private dashboardService = inject(DashboardService);

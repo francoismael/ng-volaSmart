@@ -10,6 +10,7 @@ import { formatAmount } from '../../../../core/utils/format.utils';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './budget.component.html',
+  styleUrl: './budget.component.scss',
 })
 export class BudgetComponent implements OnInit {
   private budgetService = inject(BudgetService);

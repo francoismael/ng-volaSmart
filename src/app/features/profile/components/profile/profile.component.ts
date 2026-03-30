@@ -8,6 +8,7 @@ import { ToastService } from '../../../../core/services/toast.service';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './profile.component.html',
+  styleUrl: './profile.component.scss',
 })
 export class ProfileComponent implements OnInit {
   private http = inject(HttpClient);

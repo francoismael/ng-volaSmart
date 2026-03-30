@@ -1,0 +1,31 @@
+/* ════════════════════════════════════════
+   ACCOUNTS
+════════════════════════════════════════ */
+
+.vs-accounts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.125rem; }
+.vs-account-card  {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 1.25rem;
+  box-shadow: var(--shadow-sm); transition: box-shadow 0.15s, transform 0.15s;
+}
+.vs-account-card:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
+.vs-account-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.875rem; }
+.vs-account-actions  { display: flex; gap: 2px; }
+.vs-account-name     { font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.25rem; }
+.vs-account-desc     { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+
+.vs-acct-caisse       { background: var(--warning-bg); color: var(--warning-dark); }
+.vs-acct-banque       { background: var(--primary-bg);  color: var(--primary-dark); }
+.vs-acct-nourriture   { background: #FCE7F3; color: #9D174D; }
+.vs-acct-salaire      { background: var(--success-bg);  color: var(--success-dark); }
+.vs-acct-transport    { background: var(--teal-bg); color: var(--teal-dark); }
+.vs-acct-investissement { background: var(--purple-bg); color: var(--purple-dark); }
+.vs-acct-autre        { background: var(--surface-3);   color: var(--text-muted); }
+
+/* ════════════════════════════════════════
+   RESPONSIVE — ≤ 768px  (Mobile)
+════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .vs-accounts-grid { grid-template-columns: 1fr; }
+}
