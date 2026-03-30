@@ -60,6 +60,7 @@ export class LedgerComponent implements OnInit {
       .catch(() => this.toast.error("Erreur lors de l'export"));
   }
 
+  readonly Math = Math;
   formatAmount = formatAmount;
 
   runningBalance(index: number): number {

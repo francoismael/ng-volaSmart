@@ -38,49 +38,44 @@
 
   <!-- KPI summary -->
   @if (summary().length > 0) {
-    <div class="vs-kpi-grid" style="margin-bottom:1.5rem;">
-      <div class="vs-kpi-card vs-kpi-primary">
-        <div class="vs-kpi-icon-wrap">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
-            <line x1="1" y1="10" x2="23" y2="10"/>
+    <div class="vs-kpi-ring-grid">
+      <div class="vs-kpi-ring-card">
+        <div class="vs-kpi-ring-wrap">
+          <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+            <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
+            <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9" stroke="var(--primary)" stroke-dasharray="100, 100"/>
           </svg>
+          <span class="vs-kpi-ring-pct">100%</span>
         </div>
-        <div class="vs-kpi-info">
-          <div class="vs-kpi-label">Budget total</div>
-          <div class="vs-kpi-value">{{ formatAmount(totalBudgeted()) }} <span class="vs-kpi-unit">Ar</span></div>
-          <div class="vs-kpi-sub">{{ summary().length }} catégorie(s)</div>
-        </div>
+        <span class="vs-kpi-ring-label">Budget total</span>
+        <span class="vs-kpi-ring-value">{{ formatAmount(totalBudgeted()) }} <span class="vs-kpi-ring-unit">Ar</span></span>
       </div>
 
-      <div class="vs-kpi-card vs-kpi-danger">
-        <div class="vs-kpi-icon-wrap">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/>
+      <div class="vs-kpi-ring-card">
+        <div class="vs-kpi-ring-wrap">
+          <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+            <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
+            <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9" stroke="var(--danger)"
+              [attr.stroke-dasharray]="(totalBudgeted() > 0 ? Math.min(100, Math.round(totalSpent() / totalBudgeted() * 100)) : 0) + ', 100'"/>
           </svg>
+          <span class="vs-kpi-ring-pct">{{ totalBudgeted() > 0 ? Math.min(100, Math.round(totalSpent() / totalBudgeted() * 100)) : 0 }}%</span>
         </div>
-        <div class="vs-kpi-info">
-          <div class="vs-kpi-label">Dépensé</div>
-          <div class="vs-kpi-value vs-amount-debit">{{ formatAmount(totalSpent()) }} <span class="vs-kpi-unit">Ar</span></div>
-          <div class="vs-kpi-sub">sur {{ formatAmount(totalBudgeted()) }} Ar</div>
-        </div>
+        <span class="vs-kpi-ring-label">Dépensé</span>
+        <span class="vs-kpi-ring-value vs-amount-debit">{{ formatAmount(totalSpent()) }} <span class="vs-kpi-ring-unit">Ar</span></span>
       </div>
 
-      <div class="vs-kpi-card" [class]="totalSpent() <= totalBudgeted() ? 'vs-kpi-success' : 'vs-kpi-danger'">
-        <div class="vs-kpi-icon-wrap">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+      <div class="vs-kpi-ring-card">
+        <div class="vs-kpi-ring-wrap">
+          <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+            <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
+            <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9"
+              [attr.stroke]="totalSpent() <= totalBudgeted() ? 'var(--success)' : 'var(--danger)'"
+              [attr.stroke-dasharray]="(totalBudgeted() > 0 ? (100 - Math.min(100, Math.round(totalSpent() / totalBudgeted() * 100))) : 0) + ', 100'"/>
           </svg>
+          <span class="vs-kpi-ring-pct">{{ totalBudgeted() > 0 ? (100 - Math.min(100, Math.round(totalSpent() / totalBudgeted() * 100))) : 0 }}%</span>
         </div>
-        <div class="vs-kpi-info">
-          <div class="vs-kpi-label">Restant</div>
-          <div class="vs-kpi-value" [class]="totalSpent() <= totalBudgeted() ? 'vs-amount-credit' : 'vs-amount-debit'">
-            {{ formatAmount(totalBudgeted() - totalSpent()) }} <span class="vs-kpi-unit">Ar</span>
-          </div>
-          <div class="vs-kpi-sub">
-            {{ totalBudgeted() > 0 ? (100 - Math.min(100, Math.round((totalSpent() / totalBudgeted()) * 100))) : 0 }}% disponible
-          </div>
-        </div>
+        <span class="vs-kpi-ring-label">Restant</span>
+        <span class="vs-kpi-ring-value" [class]="totalSpent() <= totalBudgeted() ? 'vs-amount-credit' : 'vs-amount-debit'">{{ formatAmount(totalBudgeted() - totalSpent()) }} <span class="vs-kpi-ring-unit">Ar</span></span>
       </div>
     </div>
   }

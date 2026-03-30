@@ -187,6 +187,7 @@ export class RecurringListComponent implements OnInit {
     });
   }
 
+  readonly Math = Math;
   formatAmount = formatAmount;
 
   getFreqLabel(item: RecurringOperation): string {

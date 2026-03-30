@@ -12,64 +12,60 @@
 } @else if (ledger()) {
 
   <!-- ── KPI Row ── -->
-  <div class="vs-kpi-grid" style="margin-bottom: 1.5rem;">
+  <div class="vs-kpi-ring-grid" style="margin-bottom: 1.5rem;">
 
-    <div class="vs-kpi-card vs-kpi-success">
-      <div class="vs-kpi-icon-wrap">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+    <div class="vs-kpi-ring-card">
+      <div class="vs-kpi-ring-wrap">
+        <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+          <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
+          <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9" stroke="var(--success)"
+            [attr.stroke-dasharray]="Math.round(ledger()!.totalCredit / (ledger()!.totalCredit + ledger()!.totalDebit || 1) * 100) + ', 100'"/>
         </svg>
+        <span class="vs-kpi-ring-pct">{{ Math.round(ledger()!.totalCredit / (ledger()!.totalCredit + ledger()!.totalDebit || 1) * 100) }}%</span>
       </div>
-      <div class="vs-kpi-info">
-        <div class="vs-kpi-label">Total Revenus</div>
-        <div class="vs-kpi-value vs-amount-credit">{{ formatAmount(ledger()!.totalCredit) }} <span class="vs-kpi-unit">Ar</span></div>
-        <div class="vs-kpi-sub">Moy. {{ formatCompact(avgMonthlyCredit()) }} Ar/mois</div>
-      </div>
+      <span class="vs-kpi-ring-label">Total Revenus</span>
+      <span class="vs-kpi-ring-value vs-amount-credit">{{ formatAmount(ledger()!.totalCredit) }} <span class="vs-kpi-ring-unit">Ar</span></span>
     </div>
 
-    <div class="vs-kpi-card vs-kpi-danger">
-      <div class="vs-kpi-icon-wrap">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/>
+    <div class="vs-kpi-ring-card">
+      <div class="vs-kpi-ring-wrap">
+        <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+          <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
+          <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9" stroke="var(--danger)"
+            [attr.stroke-dasharray]="Math.round(ledger()!.totalDebit / (ledger()!.totalCredit + ledger()!.totalDebit || 1) * 100) + ', 100'"/>
         </svg>
+        <span class="vs-kpi-ring-pct">{{ Math.round(ledger()!.totalDebit / (ledger()!.totalCredit + ledger()!.totalDebit || 1) * 100) }}%</span>
       </div>
-      <div class="vs-kpi-info">
-        <div class="vs-kpi-label">Total Dépenses</div>
-        <div class="vs-kpi-value vs-amount-debit">{{ formatAmount(ledger()!.totalDebit) }} <span class="vs-kpi-unit">Ar</span></div>
-        <div class="vs-kpi-sub">Moy. {{ formatCompact(avgMonthlyDebit()) }} Ar/mois</div>
-      </div>
+      <span class="vs-kpi-ring-label">Total Dépenses</span>
+      <span class="vs-kpi-ring-value vs-amount-debit">{{ formatAmount(ledger()!.totalDebit) }} <span class="vs-kpi-ring-unit">Ar</span></span>
     </div>
 
-    <div class="vs-kpi-card" [class]="ledger()!.balance >= 0 ? 'vs-kpi-primary' : 'vs-kpi-danger'">
-      <div class="vs-kpi-icon-wrap">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
-          <path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/>
-          <circle cx="18" cy="13" r="1" fill="currentColor"/>
+    <div class="vs-kpi-ring-card">
+      <div class="vs-kpi-ring-wrap">
+        <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+          <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
+          <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9"
+            [attr.stroke]="ledger()!.balance >= 0 ? 'var(--primary)' : 'var(--danger)'"
+            [attr.stroke-dasharray]="(ledger()!.totalCredit + ledger()!.totalDebit > 0 ? Math.min(100, Math.round(Math.abs(ledger()!.balance) / Math.max(ledger()!.totalCredit, ledger()!.totalDebit, 1) * 100)) : 0) + ', 100'"/>
         </svg>
+        <span class="vs-kpi-ring-pct">{{ ledger()!.totalCredit + ledger()!.totalDebit > 0 ? Math.min(100, Math.round(Math.abs(ledger()!.balance) / Math.max(ledger()!.totalCredit, ledger()!.totalDebit, 1) * 100)) : 0 }}%</span>
       </div>
-      <div class="vs-kpi-info">
-        <div class="vs-kpi-label">Solde Net</div>
-        <div class="vs-kpi-value" [class]="ledger()!.balance >= 0 ? 'vs-amount-credit' : 'vs-amount-debit'">
-          {{ formatAmount(ledger()!.balance) }} <span class="vs-kpi-unit">Ar</span>
-        </div>
-        <div class="vs-kpi-sub">Crédit − Débit</div>
-      </div>
+      <span class="vs-kpi-ring-label">Solde Net</span>
+      <span class="vs-kpi-ring-value" [class]="ledger()!.balance >= 0 ? 'vs-amount-credit' : 'vs-amount-debit'">{{ formatAmount(ledger()!.balance) }} <span class="vs-kpi-ring-unit">Ar</span></span>
     </div>
 
-    <div class="vs-kpi-card" [class]="savingsRate() >= 0 ? 'vs-kpi-info' : 'vs-kpi-warning'">
-      <div class="vs-kpi-icon-wrap">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+    <div class="vs-kpi-ring-card">
+      <div class="vs-kpi-ring-wrap">
+        <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+          <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
+          <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9"
+            [attr.stroke]="savingsRate() >= 0 ? 'var(--info)' : 'var(--warning)'"
+            [attr.stroke-dasharray]="Math.max(0, Math.min(100, Math.abs(savingsRate()))) + ', 100'"/>
         </svg>
+        <span class="vs-kpi-ring-pct">{{ savingsRate() }}%</span>
       </div>
-      <div class="vs-kpi-info">
-        <div class="vs-kpi-label">Taux d'épargne</div>
-        <div class="vs-kpi-value" [class]="savingsRate() >= 0 ? '' : 'vs-amount-debit'">
-          {{ savingsRate() }}%
-        </div>
-        <div class="vs-kpi-sub">{{ ledger()!.operations.length }} opérations</div>
-      </div>
+      <span class="vs-kpi-ring-label">Taux d'épargne</span>
+      <span class="vs-kpi-ring-value">{{ ledger()!.operations.length }} opérations</span>
     </div>
   </div>
 

@@ -237,6 +237,7 @@ export class OperationsListComponent implements OnInit {
     });
   }
 
+  readonly Math = Math;
   formatAmount = formatAmount;
 
   getPeriodLabel(): string {

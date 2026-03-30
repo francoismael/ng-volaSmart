@@ -6,55 +6,47 @@
 } @else if (data()) {
 
   <!-- Balance + Period Header -->
-  <div class="vs-kpi-grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+  <div class="vs-kpi-ring-grid" style="margin-bottom: 1.25rem;">
     <!-- Solde initial -->
-    <div class="vs-kpi-card vs-kpi-primary">
-      <div class="vs-kpi-icon-wrap">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
-          <path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/>
-          <circle cx="18" cy="13" r="1" fill="currentColor"/>
+    <div class="vs-kpi-ring-card">
+      <div class="vs-kpi-ring-wrap">
+        <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+          <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
+          <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9" stroke="var(--primary)" stroke-dasharray="100, 100"/>
         </svg>
+        <span class="vs-kpi-ring-pct">100%</span>
       </div>
-      <div class="vs-kpi-info">
-        <div class="vs-kpi-label">Solde initial</div>
-        <div class="vs-kpi-value">{{ formatAmount(data()!.initialBalance) }} <span class="vs-kpi-unit">Ar</span></div>
-        <div class="vs-kpi-sub">Capital de départ</div>
-      </div>
+      <span class="vs-kpi-ring-label">Solde initial</span>
+      <span class="vs-kpi-ring-value">{{ formatAmount(data()!.initialBalance) }} <span class="vs-kpi-ring-unit">Ar</span></span>
     </div>
 
     <!-- Solde actuel -->
-    <div class="vs-kpi-card" [class]="data()!.currentBalance >= 0 ? 'vs-kpi-success' : 'vs-kpi-danger'">
-      <div class="vs-kpi-icon-wrap">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+    <div class="vs-kpi-ring-card">
+      <div class="vs-kpi-ring-wrap">
+        <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+          <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
+          <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9"
+            [attr.stroke]="data()!.currentBalance >= 0 ? 'var(--success)' : 'var(--danger)'"
+            [attr.stroke-dasharray]="(data()!.initialBalance > 0 ? Math.min(100, Math.round(Math.abs(data()!.currentBalance) / data()!.initialBalance * 100)) : 0) + ', 100'"/>
         </svg>
+        <span class="vs-kpi-ring-pct">{{ data()!.initialBalance > 0 ? Math.min(100, Math.round(Math.abs(data()!.currentBalance) / data()!.initialBalance * 100)) : 0 }}%</span>
       </div>
-      <div class="vs-kpi-info">
-        <div class="vs-kpi-label">Solde actuel</div>
-        <div class="vs-kpi-value" [class]="data()!.currentBalance >= 0 ? 'vs-amount-credit' : 'vs-amount-debit'">
-          {{ formatAmount(data()!.currentBalance) }} <span class="vs-kpi-unit">Ar</span>
-        </div>
-        <div class="vs-kpi-sub">
-          <span class="vs-kpi-status" [class]="data()!.currentBalance >= 0 ? 'vs-kpi-status-ok' : 'vs-kpi-status-warn'">
-            {{ data()!.currentBalance >= 0 ? 'Positif' : 'Négatif' }}
-          </span>
-        </div>
-      </div>
+      <span class="vs-kpi-ring-label">Solde actuel</span>
+      <span class="vs-kpi-ring-value" [class]="data()!.currentBalance >= 0 ? 'vs-amount-credit' : 'vs-amount-debit'">{{ formatAmount(data()!.currentBalance) }} <span class="vs-kpi-ring-unit">Ar</span></span>
     </div>
 
     <!-- Opérations -->
-    <div class="vs-kpi-card vs-kpi-warning">
-      <div class="vs-kpi-icon-wrap">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+    <div class="vs-kpi-ring-card">
+      <div class="vs-kpi-ring-wrap">
+        <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+          <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
+          <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9" stroke="var(--warning)"
+            [attr.stroke-dasharray]="Math.min(100, data()!.recentOperations.length) + ', 100'"/>
         </svg>
+        <span class="vs-kpi-ring-pct">{{ data()!.recentOperations.length }}</span>
       </div>
-      <div class="vs-kpi-info">
-        <div class="vs-kpi-label">Opérations</div>
-        <div class="vs-kpi-value">{{ data()!.recentOperations.length }}</div>
-        <div class="vs-kpi-sub">Dernières enregistrées</div>
-      </div>
+      <span class="vs-kpi-ring-label">Opérations</span>
+      <span class="vs-kpi-ring-value">Dernières enregistrées</span>
     </div>
   </div>
 

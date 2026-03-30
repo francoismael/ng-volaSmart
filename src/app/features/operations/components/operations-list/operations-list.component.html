@@ -17,45 +17,47 @@
 
 <!-- Summary KPIs -->
 @if (operations().length > 0) {
-  <div class="vs-kpi-grid" style="grid-template-columns: 1fr 1fr 1fr; margin-bottom: 1.25rem;">
-    <div class="vs-kpi-card vs-kpi-danger">
-      <div class="vs-kpi-icon-wrap">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/>
+  <div class="vs-kpi-ring-grid" style="margin-bottom: 1.25rem;">
+    <div class="vs-kpi-ring-card">
+      <div class="vs-kpi-ring-wrap">
+        <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+          <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
+          <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9" stroke="var(--danger)"
+            [attr.stroke-dasharray]="Math.round(totalDebit() / (totalDebit() + totalCredit() || 1) * 100) + ', 100'"/>
         </svg>
+        <span class="vs-kpi-ring-pct">{{ Math.round(totalDebit() / (totalDebit() + totalCredit() || 1) * 100) }}%</span>
       </div>
-      <div class="vs-kpi-info">
-        <div class="vs-kpi-label">Total dépenses</div>
-        <div class="vs-kpi-value vs-amount-debit">{{ formatAmount(totalDebit()) }} <span class="vs-kpi-unit">Ar</span></div>
-      </div>
+      <span class="vs-kpi-ring-label">Total dépenses</span>
+      <span class="vs-kpi-ring-value vs-amount-debit">{{ formatAmount(totalDebit()) }} <span class="vs-kpi-ring-unit">Ar</span></span>
     </div>
 
-    <div class="vs-kpi-card vs-kpi-success">
-      <div class="vs-kpi-icon-wrap">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+    <div class="vs-kpi-ring-card">
+      <div class="vs-kpi-ring-wrap">
+        <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+          <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
+          <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9" stroke="var(--success)"
+            [attr.stroke-dasharray]="Math.round(totalCredit() / (totalDebit() + totalCredit() || 1) * 100) + ', 100'"/>
         </svg>
+        <span class="vs-kpi-ring-pct">{{ Math.round(totalCredit() / (totalDebit() + totalCredit() || 1) * 100) }}%</span>
       </div>
-      <div class="vs-kpi-info">
-        <div class="vs-kpi-label">Total revenus</div>
-        <div class="vs-kpi-value vs-amount-credit">{{ formatAmount(totalCredit()) }} <span class="vs-kpi-unit">Ar</span></div>
-      </div>
+      <span class="vs-kpi-ring-label">Total revenus</span>
+      <span class="vs-kpi-ring-value vs-amount-credit">{{ formatAmount(totalCredit()) }} <span class="vs-kpi-ring-unit">Ar</span></span>
     </div>
 
-    <div class="vs-kpi-card" [class]="(totalCredit() - totalDebit()) >= 0 ? 'vs-kpi-primary' : 'vs-kpi-danger'">
-      <div class="vs-kpi-icon-wrap">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
-          <path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/>
-          <circle cx="18" cy="13" r="1" fill="currentColor"/>
+    <div class="vs-kpi-ring-card">
+      <div class="vs-kpi-ring-wrap">
+        <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+          <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
+          <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9"
+            [attr.stroke]="(totalCredit() - totalDebit()) >= 0 ? 'var(--primary)' : 'var(--danger)'"
+            [attr.stroke-dasharray]="(totalCredit() + totalDebit() > 0 ? Math.min(100, Math.round(Math.abs(totalCredit() - totalDebit()) / Math.max(totalCredit(), totalDebit(), 1) * 100)) : 0) + ', 100'"/>
         </svg>
+        <span class="vs-kpi-ring-pct">{{ totalCredit() + totalDebit() > 0 ? Math.min(100, Math.round(Math.abs(totalCredit() - totalDebit()) / Math.max(totalCredit(), totalDebit(), 1) * 100)) : 0 }}%</span>
       </div>
-      <div class="vs-kpi-info">
-        <div class="vs-kpi-label">Solde période</div>
-        <div class="vs-kpi-value" [class]="(totalCredit() - totalDebit()) >= 0 ? 'vs-amount-credit' : 'vs-amount-debit'">
-          {{ (totalCredit() - totalDebit()) >= 0 ? '+' : '' }}{{ formatAmount(totalCredit() - totalDebit()) }} <span class="vs-kpi-unit">Ar</span>
-        </div>
-      </div>
+      <span class="vs-kpi-ring-label">Solde période</span>
+      <span class="vs-kpi-ring-value" [class]="(totalCredit() - totalDebit()) >= 0 ? 'vs-amount-credit' : 'vs-amount-debit'">
+        {{ (totalCredit() - totalDebit()) >= 0 ? '+' : '' }}{{ formatAmount(totalCredit() - totalDebit()) }} <span class="vs-kpi-ring-unit">Ar</span>
+      </span>
     </div>
   </div>
 }

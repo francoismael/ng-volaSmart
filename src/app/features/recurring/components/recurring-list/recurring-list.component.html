@@ -15,43 +15,42 @@
 </div>
 
 <!-- Summary KPIs -->
-<div class="vs-kpi-grid" style="grid-template-columns: 1fr 1fr 1fr; margin-bottom: 1.5rem;">
-  <div class="vs-kpi-card vs-kpi-warning">
-    <div class="vs-kpi-icon-wrap">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
-        <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+<div class="vs-kpi-ring-grid">
+  <div class="vs-kpi-ring-card">
+    <div class="vs-kpi-ring-wrap">
+      <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+        <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
+        <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9" stroke="var(--warning)"
+          [attr.stroke-dasharray]="(items().length > 0 ? Math.round(items().filter(i => i.isActive).length / items().length * 100) : 0) + ', 100'"/>
       </svg>
+      <span class="vs-kpi-ring-pct">{{ items().filter(i => i.isActive).length }}/{{ items().length }}</span>
     </div>
-    <div class="vs-kpi-info">
-      <div class="vs-kpi-label">Total programmés</div>
-      <div class="vs-kpi-value">{{ items().length }}</div>
-      <div class="vs-kpi-sub">{{ items().filter(i => i.isActive).length }} actif(s)</div>
-    </div>
+    <span class="vs-kpi-ring-label">Total programmés</span>
+    <span class="vs-kpi-ring-value">{{ items().filter(i => i.isActive).length }} actif(s)</span>
   </div>
-  <div class="vs-kpi-card vs-kpi-danger">
-    <div class="vs-kpi-icon-wrap">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/>
+  <div class="vs-kpi-ring-card">
+    <div class="vs-kpi-ring-wrap">
+      <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+        <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
+        <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9" stroke="var(--danger)"
+          [attr.stroke-dasharray]="Math.round(totalMonthlyDebit() / (totalMonthlyDebit() + totalMonthlyCredit() || 1) * 100) + ', 100'"/>
       </svg>
+      <span class="vs-kpi-ring-pct">{{ Math.round(totalMonthlyDebit() / (totalMonthlyDebit() + totalMonthlyCredit() || 1) * 100) }}%</span>
     </div>
-    <div class="vs-kpi-info">
-      <div class="vs-kpi-label">Charges mensuelles</div>
-      <div class="vs-kpi-value vs-amount-debit">{{ formatAmount(totalMonthlyDebit()) }} <span class="vs-kpi-unit">Ar</span></div>
-      <div class="vs-kpi-sub">Dépenses fixes/mois</div>
-    </div>
+    <span class="vs-kpi-ring-label">Charges mensuelles</span>
+    <span class="vs-kpi-ring-value vs-amount-debit">{{ formatAmount(totalMonthlyDebit()) }} <span class="vs-kpi-ring-unit">Ar</span></span>
   </div>
-  <div class="vs-kpi-card vs-kpi-success">
-    <div class="vs-kpi-icon-wrap">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+  <div class="vs-kpi-ring-card">
+    <div class="vs-kpi-ring-wrap">
+      <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+        <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
+        <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9" stroke="var(--success)"
+          [attr.stroke-dasharray]="Math.round(totalMonthlyCredit() / (totalMonthlyDebit() + totalMonthlyCredit() || 1) * 100) + ', 100'"/>
       </svg>
+      <span class="vs-kpi-ring-pct">{{ Math.round(totalMonthlyCredit() / (totalMonthlyDebit() + totalMonthlyCredit() || 1) * 100) }}%</span>
     </div>
-    <div class="vs-kpi-info">
-      <div class="vs-kpi-label">Revenus mensuels</div>
-      <div class="vs-kpi-value vs-amount-credit">{{ formatAmount(totalMonthlyCredit()) }} <span class="vs-kpi-unit">Ar</span></div>
-      <div class="vs-kpi-sub">Revenus fixes/mois</div>
-    </div>
+    <span class="vs-kpi-ring-label">Revenus mensuels</span>
+    <span class="vs-kpi-ring-value vs-amount-credit">{{ formatAmount(totalMonthlyCredit()) }} <span class="vs-kpi-ring-unit">Ar</span></span>
   </div>
 </div>
 

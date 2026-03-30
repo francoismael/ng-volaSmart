@@ -66,5 +66,6 @@ export class DashboardComponent implements OnInit {
     this.period.set(p);
   }
 
+  readonly Math = Math;
   formatAmount = formatAmount;
 }
