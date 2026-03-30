@@ -1,0 +1,166 @@
+<div class="vs-page-locked">
+@if (isLoading()) {
+  <div class="vs-page-loader">
+    <div class="vs-spinner vs-spinner-dark"></div>
+  </div>
+} @else if (data()) {
+
+  <!-- Balance + Period Header -->
+  <div class="vs-kpi-grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+    <!-- Solde initial -->
+    <div class="vs-kpi-card vs-kpi-primary">
+      <div class="vs-kpi-icon-wrap">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+          <path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/>
+          <circle cx="18" cy="13" r="1" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="vs-kpi-info">
+        <div class="vs-kpi-label">Solde initial</div>
+        <div class="vs-kpi-value">{{ formatAmount(data()!.initialBalance) }} <span class="vs-kpi-unit">Ar</span></div>
+        <div class="vs-kpi-sub">Capital de départ</div>
+      </div>
+    </div>
+
+    <!-- Solde actuel -->
+    <div class="vs-kpi-card" [class]="data()!.currentBalance >= 0 ? 'vs-kpi-success' : 'vs-kpi-danger'">
+      <div class="vs-kpi-icon-wrap">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+      </div>
+      <div class="vs-kpi-info">
+        <div class="vs-kpi-label">Solde actuel</div>
+        <div class="vs-kpi-value" [class]="data()!.currentBalance >= 0 ? 'vs-amount-credit' : 'vs-amount-debit'">
+          {{ formatAmount(data()!.currentBalance) }} <span class="vs-kpi-unit">Ar</span>
+        </div>
+        <div class="vs-kpi-sub">
+          <span class="vs-kpi-status" [class]="data()!.currentBalance >= 0 ? 'vs-kpi-status-ok' : 'vs-kpi-status-warn'">
+            {{ data()!.currentBalance >= 0 ? 'Positif' : 'Négatif' }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Opérations -->
+    <div class="vs-kpi-card vs-kpi-warning">
+      <div class="vs-kpi-icon-wrap">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+        </svg>
+      </div>
+      <div class="vs-kpi-info">
+        <div class="vs-kpi-label">Opérations</div>
+        <div class="vs-kpi-value">{{ data()!.recentOperations.length }}</div>
+        <div class="vs-kpi-sub">Dernières enregistrées</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Period Stats Card -->
+  <div class="vs-card" style="margin-bottom: 1.25rem;">
+    <div class="vs-card-header">
+      <span class="vs-card-title">Dépenses & Revenus</span>
+      <div class="vs-tab-group">
+        @for (p of periods; track p.key) {
+          <button class="vs-tab" [class.active]="period() === p.key" (click)="setPeriod(p.key)">{{ p.label }}</button>
+        }
+      </div>
+    </div>
+    <div class="vs-card-body">
+      <div class="vs-period-stats">
+        <div class="vs-period-stat vs-period-debit">
+          <div class="vs-period-stat-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/>
+            </svg>
+          </div>
+          <div>
+            <div class="vs-period-stat-label">Dépenses</div>
+            <div class="vs-period-stat-value vs-amount-debit">{{ formatAmount(periodDebit()) }} Ar</div>
+          </div>
+        </div>
+        <div class="vs-period-stat-divider"></div>
+        <div class="vs-period-stat vs-period-credit">
+          <div class="vs-period-stat-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+            </svg>
+          </div>
+          <div>
+            <div class="vs-period-stat-label">Revenus</div>
+            <div class="vs-period-stat-value vs-amount-credit">{{ formatAmount(periodCredit()) }} Ar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Operations -->
+  <div class="vs-card vs-card-fill">
+    <div class="vs-card-header">
+      <div class="vs-card-title-group">
+        <span class="vs-card-title">Opérations Récentes</span>
+        <span class="vs-card-count">{{ data()!.recentOperations.length }}</span>
+      </div>
+      <a routerLink="/app/operations" class="vs-btn vs-btn-outline vs-btn-sm">
+        Voir tout
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </a>
+    </div>
+    @if (data()!.recentOperations.length === 0) {
+      <div class="vs-empty">
+        <div class="vs-empty-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <div class="vs-empty-title">Aucune opération</div>
+        <div class="vs-empty-text">Ajoutez votre première opération</div>
+        <a routerLink="/app/operations" class="vs-btn vs-btn-primary vs-btn-sm" style="margin-top:1rem;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Ajouter
+        </a>
+      </div>
+    } @else {
+      <div class="vs-table-wrap" style="border:none;box-shadow:none;border-radius:0;">
+        <table class="vs-table vs-table-mobile-compact">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Libellé</th>
+              <th class="text-right">Débit</th>
+              <th class="text-right">Crédit</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (op of data()!.recentOperations; track op.id) {
+              <tr>
+                <td class="vs-td-date">{{ op.date | date:'dd/MM/yyyy' }}</td>
+                <td class="vs-td-label">{{ op.label }}</td>
+                <td class="text-right">
+                  @if (op.debit > 0) {
+                    <span class="vs-amount-debit">{{ formatAmount(op.debit) }}</span>
+                  } @else {
+                    <span class="vs-td-empty">—</span>
+                  }
+                </td>
+                <td class="text-right">
+                  @if (op.credit > 0) {
+                    <span class="vs-amount-credit">{{ formatAmount(op.credit) }}</span>
+                  } @else {
+                    <span class="vs-td-empty">—</span>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+}
+</div>

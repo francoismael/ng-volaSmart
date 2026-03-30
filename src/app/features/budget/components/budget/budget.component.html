@@ -1,0 +1,208 @@
+<div class="vs-toolbar">
+  <div>
+    <h1 class="vs-toolbar-title">Budget Mensuel</h1>
+    <p class="vs-toolbar-sub">Planifiez et suivez vos dépenses par catégorie</p>
+  </div>
+  <div class="vs-toolbar-actions">
+    <button class="vs-btn vs-btn-primary" (click)="openForm()" [disabled]="unbudgetedCategories().length === 0">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+      <span style="padding-top:1px;">Ajouter budget</span>
+    </button>
+  </div>
+</div>
+
+<!-- Month navigation -->
+<div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;">
+  <button class="vs-btn vs-btn-outline vs-btn-sm" (click)="changeMonth(-1)">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+  </button>
+  <span style="font-weight:600;font-size:0.9375rem;color:var(--text-dark);min-width:160px;text-align:center;text-transform:capitalize;">
+    {{ monthLabel() }}
+  </span>
+  <button class="vs-btn vs-btn-outline vs-btn-sm" (click)="changeMonth(1)">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"/>
+    </svg>
+  </button>
+</div>
+
+@if (isLoading()) {
+  <div class="vs-page-loader">
+    <div class="vs-spinner vs-spinner-dark"></div>
+  </div>
+} @else {
+
+  <!-- KPI summary -->
+  @if (summary().length > 0) {
+    <div class="vs-kpi-grid" style="margin-bottom:1.5rem;">
+      <div class="vs-kpi-card vs-kpi-primary">
+        <div class="vs-kpi-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+            <line x1="1" y1="10" x2="23" y2="10"/>
+          </svg>
+        </div>
+        <div class="vs-kpi-info">
+          <div class="vs-kpi-label">Budget total</div>
+          <div class="vs-kpi-value">{{ formatAmount(totalBudgeted()) }} <span class="vs-kpi-unit">Ar</span></div>
+          <div class="vs-kpi-sub">{{ summary().length }} catégorie(s)</div>
+        </div>
+      </div>
+
+      <div class="vs-kpi-card vs-kpi-danger">
+        <div class="vs-kpi-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/>
+          </svg>
+        </div>
+        <div class="vs-kpi-info">
+          <div class="vs-kpi-label">Dépensé</div>
+          <div class="vs-kpi-value vs-amount-debit">{{ formatAmount(totalSpent()) }} <span class="vs-kpi-unit">Ar</span></div>
+          <div class="vs-kpi-sub">sur {{ formatAmount(totalBudgeted()) }} Ar</div>
+        </div>
+      </div>
+
+      <div class="vs-kpi-card" [class]="totalSpent() <= totalBudgeted() ? 'vs-kpi-success' : 'vs-kpi-danger'">
+        <div class="vs-kpi-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <div class="vs-kpi-info">
+          <div class="vs-kpi-label">Restant</div>
+          <div class="vs-kpi-value" [class]="totalSpent() <= totalBudgeted() ? 'vs-amount-credit' : 'vs-amount-debit'">
+            {{ formatAmount(totalBudgeted() - totalSpent()) }} <span class="vs-kpi-unit">Ar</span>
+          </div>
+          <div class="vs-kpi-sub">
+            {{ totalBudgeted() > 0 ? (100 - Math.min(100, Math.round((totalSpent() / totalBudgeted()) * 100))) : 0 }}% disponible
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (summary().length === 0) {
+    <div class="vs-empty-page">
+      <div class="vs-empty-icon">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+          <line x1="1" y1="10" x2="23" y2="10"/>
+        </svg>
+      </div>
+      <div class="vs-empty-title">Aucun budget défini</div>
+      <div class="vs-empty-text">Cliquez sur "Ajouter budget" pour planifier vos dépenses du mois.</div>
+    </div>
+  } @else {
+    <!-- Budget lines -->
+    <div class="vs-card">
+      <div class="vs-card-header">
+        <span class="vs-card-title">Suivi par catégorie</span>
+        <span class="vs-card-count">{{ summary().length }} ligne(s)</span>
+      </div>
+      <div class="vs-card-body" style="padding:0;">
+        @for (item of summary(); track item.category) {
+          <div class="vs-budget-row">
+            <div class="vs-budget-row-top">
+              <span class="vs-cat-badge"
+                [style.background]="getCategoryColor(item.category) + '22'"
+                [style.color]="getCategoryColor(item.category)"
+                style="margin:0;min-width:100px;text-align:center;">
+                {{ getCategoryLabel(item.category) }}
+              </span>
+              <div style="flex:1;"></div>
+              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
+                <span style="font-size:0.8rem;color:var(--text-muted);">
+                  {{ formatAmount(item.spent) }} / {{ formatAmount(item.budgeted) }} Ar
+                </span>
+                <span class="vs-badge" [class]="statusClass(item.pct)"
+                  style="font-size:0.7rem;padding:2px 8px;">
+                  {{ item.pct }}%
+                </span>
+              </div>
+              <button class="vs-btn vs-btn-ghost vs-btn-sm" (click)="openEdit(item)" style="padding:4px 6px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+              </button>
+              <button class="vs-btn vs-btn-ghost vs-btn-sm" (click)="deleteLine(item)" style="padding:4px 6px;color:var(--danger);">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/>
+                  <path d="M10 11v6"/><path d="M14 11v6"/>
+                </svg>
+              </button>
+            </div>
+            <!-- Progress bar -->
+            <div style="background:var(--border);border-radius:99px;height:6px;overflow:hidden;margin-top:0.5rem;">
+              <div
+                [style.width.%]="Math.min(100, item.pct)"
+                [style.background]="barColor(item.pct)"
+                style="height:100%;border-radius:99px;transition:width 0.4s;">
+              </div>
+            </div>
+            @if (item.remaining < 0) {
+              <div style="font-size:0.75rem;color:var(--danger);margin-top:4px;font-weight:600;">
+                Dépassement : {{ formatAmount(-item.remaining) }} Ar
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+}
+
+<!-- Add / Edit modal -->
+@if (showForm()) {
+  <div class="vs-modal-overlay" (click)="closeForm()">
+    <div class="vs-modal vs-modal-sm" (click)="$event.stopPropagation()">
+      <div class="vs-modal-header">
+        <div>
+          <div class="vs-modal-title">Budget catégorie</div>
+          <div class="vs-modal-sub">{{ monthLabel() }}</div>
+        </div>
+        <button class="vs-btn vs-btn-ghost vs-btn-sm" (click)="closeForm()" style="padding:6px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="vs-modal-body">
+        <div class="vs-form-group">
+          <label class="vs-label">Catégorie</label>
+          <select class="vs-select" [ngModel]="formCategory()" (ngModelChange)="formCategory.set($event)">
+            @for (cat of categories; track cat.key) {
+              <option [value]="cat.key">{{ cat.label }}</option>
+            }
+          </select>
+        </div>
+        <div class="vs-form-group">
+          <label class="vs-label">Montant budget (Ar)</label>
+          <input
+            type="number"
+            class="vs-input"
+            placeholder="0"
+            min="0"
+            [ngModel]="formAmount()"
+            (ngModelChange)="formAmount.set($event)"
+          />
+        </div>
+      </div>
+
+      <div class="vs-modal-footer">
+        <button class="vs-btn vs-btn-outline" (click)="closeForm()">Annuler</button>
+        <button class="vs-btn vs-btn-primary" (click)="saveForm()" [disabled]="formLoading()">
+          @if (formLoading()) {
+            <div class="vs-spinner" style="width:14px;height:14px;border-width:2px;"></div>
+          }
+          Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+}
