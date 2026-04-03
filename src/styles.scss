@@ -967,9 +967,9 @@ a {
 ════════════════════════════════════════ */
 
 .vs-spinner {
-    width: 36px;
-    height: 36px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
     border-top-color: white;
     border-radius: 50%;
     animation: vs-spin 0.7s linear infinite;
@@ -977,6 +977,9 @@ a {
     flex-shrink: 0;
 }
 .vs-spinner-dark {
+    width: 36px;
+    height: 36px;
+    border-width: 3px;
     border-color: rgba(67, 97, 238, 0.2);
     border-top-color: var(--primary);
 }
