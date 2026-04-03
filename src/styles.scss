@@ -1404,14 +1404,22 @@ a {
         flex-direction: column;
     }
 
-    /* Toolbar: stack vertically, center actions */
+    /* Toolbar: keep row layout, title shrinks if needed */
     .vs-toolbar {
-        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 0.75rem;
         align-items: center;
     }
+    .vs-toolbar > div:first-child {
+        min-width: 0;
+    }
+    .vs-toolbar-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
     .vs-toolbar-actions {
-        width: 100%;
-        justify-content: center;
+        flex-shrink: 0;
     }
 
     /* Tables: force min-width so horizontal scroll is triggered */
