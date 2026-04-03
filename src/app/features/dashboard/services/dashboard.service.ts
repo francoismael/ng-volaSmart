@@ -2,27 +2,55 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+/** Donnees agrégées du tableau de bord (soldes, totaux par période, opérations récentes). */
 export interface DashboardData {
-  initialBalance: number;
-  totalCredit: number;
-  totalDebit: number;
-  currentBalance: number;
-  todayDebit: number;
-  todayCredit: number;
-  weekDebit: number;
-  weekCredit: number;
-  monthDebit: number;
-  monthCredit: number;
-  yearDebit: number;
-  yearCredit: number;
-  recentOperations: any[];
+    /** Solde initial du compte */
+    initialBalance: number;
+    /** Total des crédits */
+    totalCredit: number;
+    /** Total des débits */
+    totalDebit: number;
+    /** Solde courant calculé */
+    currentBalance: number;
+    /** Débits du jour */
+    todayDebit: number;
+    /** Crédits du jour */
+    todayCredit: number;
+    /** Débits de la semaine */
+    weekDebit: number;
+    /** Crédits de la semaine */
+    weekCredit: number;
+    /** Débits du mois */
+    monthDebit: number;
+    /** Crédits du mois */
+    monthCredit: number;
+    /** Débits de l'année */
+    yearDebit: number;
+    /** Crédits de l'année */
+    yearCredit: number;
+    /** Liste des opérations récentes */
+    recentOperations: {
+        id: string;
+        label: string;
+        amount: number;
+        type: string;
+        date: string;
+        category: string;
+        debit: number;
+        credit: number;
+    }[];
 }
 
+/** Service de récupération des données du tableau de bord. */
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
-  private http = inject(HttpClient);
+    private http = inject(HttpClient);
 
-  getDashboard(): Observable<DashboardData> {
-    return this.http.get<DashboardData>('http://localhost:3000/dashboard');
-  }
+    /**
+     * Récupère les données agrégées du tableau de bord.
+     * @returns {Observable<DashboardData>} Les données du tableau de bord
+     */
+    getDashboard(): Observable<DashboardData> {
+        return this.http.get<DashboardData>('http://localhost:3000/dashboard');
+    }
 }

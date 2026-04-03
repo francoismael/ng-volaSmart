@@ -1,0 +1,103 @@
+// Font-size tokens — naming: $font-size-{approx-px}
+// Based on 1rem = 16px base
+
+$font-size-10: 0.6rem; // 9.6px
+$font-size-10b: 0.62rem; // 9.9px
+$font-size-10c: 0.63rem; // 10.1px
+$font-size-10d: 0.65rem; // 10.4px
+$font-size-11: 0.68rem; // 10.9px
+$font-size-11b: 0.7rem; // 11.2px
+$font-size-11c: 0.72rem; // 11.5px
+$font-size-12: 0.73rem; // 11.7px
+$font-size-12b: 0.75rem; // 12px
+$font-size-12c: 0.76rem; // 12.2px
+$font-size-12d: 0.775rem; // 12.4px
+$font-size-12e: 0.78rem; // 12.5px
+$font-size-13: 0.8rem; // 12.8px
+$font-size-13b: 0.82rem; // 13.1px
+$font-size-13c: 0.83rem; // 13.3px
+$font-size-14: 0.875rem; // 14px
+$font-size-14b: 0.88rem; // 14.1px
+$font-size-14c: 0.9rem; // 14.4px
+$font-size-15: 0.95rem; // 15.2px
+$font-size-16: 1rem; // 16px
+$font-size-17: 1.05rem; // 16.8px
+$font-size-18: 1.1rem; // 17.6px
+$font-size-19: 1.2rem; // 19.2px
+$font-size-22: 1.35rem; // 21.6px
+$font-size-22b: 1.4rem; // 22.4px
+$font-size-24: 1.5rem; // 24px
+$font-size-25: 1.55rem; // 24.8px
+$font-size-30: 1.9rem; // 30.4px
+
+// ── Typography utility classes ──
+.bold-11 {
+    font-size: $font-size-11b;
+    font-weight: 700;
+}
+.bold-12 {
+    font-size: $font-size-12;
+    font-weight: 700;
+}
+.bold-13 {
+    font-size: $font-size-13;
+    font-weight: 700;
+}
+.bold-14 {
+    font-size: $font-size-14;
+    font-weight: 700;
+}
+.bold-16 {
+    font-size: $font-size-16;
+    font-weight: 700;
+}
+.bold-18 {
+    font-size: $font-size-18;
+    font-weight: 700;
+}
+.bold-22 {
+    font-size: $font-size-22;
+    font-weight: 700;
+}
+.bold-24 {
+    font-size: $font-size-24;
+    font-weight: 700;
+}
+
+.regular-11 {
+    font-size: $font-size-11b;
+    font-weight: 400;
+}
+.regular-12 {
+    font-size: $font-size-12;
+    font-weight: 400;
+}
+.regular-13 {
+    font-size: $font-size-13;
+    font-weight: 400;
+}
+.regular-14 {
+    font-size: $font-size-14;
+    font-weight: 400;
+}
+.regular-16 {
+    font-size: $font-size-16;
+    font-weight: 400;
+}
+
+.semibold-12 {
+    font-size: $font-size-12;
+    font-weight: 600;
+}
+.semibold-13 {
+    font-size: $font-size-13;
+    font-weight: 600;
+}
+.semibold-14 {
+    font-size: $font-size-14;
+    font-weight: 600;
+}
+.semibold-16 {
+    font-size: $font-size-16;
+    font-weight: 600;
+}

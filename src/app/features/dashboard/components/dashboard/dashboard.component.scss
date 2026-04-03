@@ -2,20 +2,60 @@
    PERIOD STATS (DASHBOARD)
 ════════════════════════════════════════ */
 
-.vs-period-stats { display: flex; align-items: center; }
-.vs-period-stat  { display: flex; align-items: center; gap: 0.875rem; flex: 1; padding: 0.875rem 1.25rem; }
-.vs-period-stat-divider { width: 1px; background: var(--border); align-self: stretch; }
-.vs-period-stat-icon    { width: 38px; height: 38px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.vs-period-debit  .vs-period-stat-icon { background: var(--danger-bg);  color: var(--danger); }
-.vs-period-credit .vs-period-stat-icon { background: var(--success-bg); color: var(--success-dark); }
-.vs-period-stat-label { font-size: 0.73rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px; }
-.vs-period-stat-value { font-size: 1.05rem; font-weight: 700; }
+.vs-period-stats {
+    display: flex;
+    align-items: center;
+}
+.vs-period-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    flex: 1;
+    padding: 0.875rem 1.25rem;
+}
+.vs-period-stat-divider {
+    width: 1px;
+    background: var(--border);
+    align-self: stretch;
+}
+.vs-period-stat-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.vs-period-debit .vs-period-stat-icon {
+    background: var(--danger-bg);
+    color: var(--danger);
+}
+.vs-period-credit .vs-period-stat-icon {
+    background: var(--success-bg);
+    color: var(--success-dark);
+}
+.vs-period-stat-label {
+    font-size: 0.73rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+.vs-period-stat-value {
+    font-size: 1.05rem;
+    font-weight: 700;
+}
 
 /* ════════════════════════════════════════
    RESPONSIVE — ≤ 768px  (Mobile)
 ════════════════════════════════════════ */
 
 @media (max-width: 768px) {
-  .vs-period-stats        { flex-direction: column; }
-  .vs-period-stat-divider { width: 100%; height: 1px; }
+    .vs-period-stats {
+        flex-direction: column;
+    }
+    .vs-period-stat-divider {
+        width: 100%;
+        height: 1px;
+    }
 }

@@ -1,0 +1,35 @@
+// ── Shadows ──
+$shadow-xs: 0 1px 3px 0 rgb(0 0 0 / 0.04);
+$shadow-sm:
+    0 2px 8px 0 rgb(15 23 42 / 0.05),
+    0 1px 3px 0 rgb(15 23 42 / 0.03);
+$shadow:
+    0 4px 16px -2px rgb(15 23 42 / 0.07),
+    0 2px 6px -2px rgb(15 23 42 / 0.04);
+$shadow-md:
+    0 10px 24px -4px rgb(15 23 42 / 0.09),
+    0 4px 8px -4px rgb(15 23 42 / 0.05);
+$shadow-lg:
+    0 20px 40px -8px rgb(15 23 42 / 0.12),
+    0 8px 16px -6px rgb(15 23 42 / 0.06);
+
+// ── Radius ──
+$radius-xs: 4px;
+$radius-sm: 8px;
+$radius: 12px;
+$radius-lg: 16px;
+$radius-xl: 20px;
+$radius-2xl: 28px;
+
+// ── Z-index scale ──
+$z-base: 1;
+$z-sticky-col: 2;
+$z-sticky-header: 3;
+$z-sticky-footer: 4;
+$z-sidebar: 50;
+$z-topbar: 100;
+$z-dropdown: 149;
+$z-dropdown-overlay: 150;
+$z-modal-backdrop: 199;
+$z-modal: 200;
+$z-toast: 999;

@@ -4,49 +4,49 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [FormsModule, RouterLink],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.scss',
+    selector: 'app-register',
+    standalone: true,
+    imports: [FormsModule, RouterLink],
+    templateUrl: './register.component.html',
+    styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
-  private auth = inject(AuthService);
-  private router = inject(Router);
+    private auth = inject(AuthService);
+    private router = inject(Router);
 
-  username = '';
-  email = '';
-  password = '';
-  showPassword = signal(false);
-  isLoading = signal(false);
-  error = signal('');
-  success = signal('');
+    username = '';
+    email = '';
+    password = '';
+    showPassword = signal(false);
+    isLoading = signal(false);
+    error = signal('');
+    success = signal('');
 
-  togglePassword() {
-    this.showPassword.update((v) => !v);
-  }
-
-  onSubmit() {
-    if (!this.username || !this.email || !this.password) {
-      this.error.set('Veuillez remplir tous les champs');
-      return;
+    togglePassword() {
+        this.showPassword.update((v) => !v);
     }
-    if (this.password.length < 12) {
-      this.error.set('Le mot de passe doit contenir au moins 12 caractères');
-      return;
+
+    onSubmit() {
+        if (!this.username || !this.email || !this.password) {
+            this.error.set('Veuillez remplir tous les champs');
+            return;
+        }
+        if (this.password.length < 12) {
+            this.error.set('Le mot de passe doit contenir au moins 12 caractères');
+            return;
+        }
+        this.isLoading.set(true);
+        this.error.set('');
+        this.auth.register({ username: this.username, email: this.email, password: this.password }).subscribe({
+            next: () => {
+                this.success.set('Compte créé avec succès ! Redirection...');
+                setTimeout(() => this.router.navigate(['/auth/login']), 1500);
+            },
+            error: (err) => {
+                if (err.status === 409) this.error.set('Cet email est déjà utilisé');
+                else this.error.set('Erreur lors de la création du compte');
+                this.isLoading.set(false);
+            },
+        });
     }
-    this.isLoading.set(true);
-    this.error.set('');
-    this.auth.register({ username: this.username, email: this.email, password: this.password }).subscribe({
-      next: () => {
-        this.success.set('Compte créé avec succès ! Redirection...');
-        setTimeout(() => this.router.navigate(['/auth/login']), 1500);
-      },
-      error: (err) => {
-        if (err.status === 409) this.error.set('Cet email est déjà utilisé');
-        else this.error.set('Erreur lors de la création du compte');
-        this.isLoading.set(false);
-      },
-    });
-  }
 }

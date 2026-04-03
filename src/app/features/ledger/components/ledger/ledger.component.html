@@ -1,177 +1,263 @@
 <div class="vs-page-locked">
-<div class="vs-toolbar">
-  <div>
-    <h1 class="vs-toolbar-title">Livre Comptable</h1>
-    <p class="vs-toolbar-sub">Vue complète de toutes vos opérations</p>
-  </div>
-  <div class="vs-toolbar-actions">
-    <button class="vs-btn vs-btn-outline vs-btn-sm" (click)="confirmExport(exportLinks[1].url)">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/>
-        <line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="12" y2="12"/><line x1="15" y1="15" x2="12" y2="12"/>
-      </svg>
-      Export PDF
-    </button>
-  </div>
-</div>
-
-<!-- Export Confirmation Modal -->
-@if (showExportConfirm()) {
-  <div class="vs-modal-overlay" (click)="cancelExport()">
-    <div class="vs-modal vs-modal-sm" (click)="$event.stopPropagation()">
-      <div class="vs-modal-header">
+    <div class="vs-toolbar">
         <div>
-          <div class="vs-modal-title">{{ pendingExportUrl().includes('csv') ? 'Export CSV' : 'Export PDF' }}</div>
-          <div class="vs-modal-sub">Télécharger le fichier d'export</div>
+            <h1 class="vs-toolbar-title">Livre Comptable</h1>
+            <p class="vs-toolbar-sub">Vue complète de toutes vos opérations</p>
         </div>
-        <button class="vs-btn vs-btn-ghost vs-btn-sm" (click)="cancelExport()" style="padding:6px;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-          </svg>
-        </button>
-      </div>
-      <div class="vs-modal-body">
-        <p style="color:var(--text-muted); font-size:0.875rem;">
-          Voulez-vous exporter toutes vos opérations au format
-          <strong>{{ pendingExportUrl().includes('csv') ? 'CSV' : 'PDF' }}</strong> ?
-        </p>
-      </div>
-      <div class="vs-modal-footer">
-        <button class="vs-btn vs-btn-outline" (click)="cancelExport()">Annuler</button>
-        <button class="vs-btn vs-btn-primary" (click)="doExport()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          Télécharger
-        </button>
-      </div>
+        <div class="vs-toolbar-actions">
+            <button class="vs-btn vs-btn-outline vs-btn-sm" (click)="confirmExport(exportLinks[1].url)">
+                <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="12" y1="18" x2="12" y2="12" />
+                    <line x1="9" y1="15" x2="12" y2="12" />
+                    <line x1="15" y1="15" x2="12" y2="12" />
+                </svg>
+                Export PDF
+            </button>
+        </div>
     </div>
-  </div>
-}
 
-@if (isLoading()) {
-  <div class="vs-page-loader">
-    <div class="vs-spinner vs-spinner-dark"></div>
-  </div>
-} @else if (data()) {
-  <!-- Summary Cards -->
-  <div class="vs-kpi-ring-grid">
-    <div class="vs-kpi-ring-card">
-      <div class="vs-kpi-ring-wrap">
-        <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
-          <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
-          <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9" stroke="var(--danger)"
-            [attr.stroke-dasharray]="Math.round(data()!.totalDebit / (data()!.totalDebit + data()!.totalCredit || 1) * 100) + ', 100'"/>
-        </svg>
-        <span class="vs-kpi-ring-pct">{{ Math.round(data()!.totalDebit / (data()!.totalDebit + data()!.totalCredit || 1) * 100) }}%</span>
-      </div>
-      <span class="vs-kpi-ring-label">Total Débit</span>
-      <span class="vs-kpi-ring-value vs-amount-debit">{{ formatAmount(data()!.totalDebit) }} <span class="vs-kpi-ring-unit">Ar</span></span>
-    </div>
-    <div class="vs-kpi-ring-card">
-      <div class="vs-kpi-ring-wrap">
-        <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
-          <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
-          <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9" stroke="var(--success)"
-            [attr.stroke-dasharray]="Math.round(data()!.totalCredit / (data()!.totalDebit + data()!.totalCredit || 1) * 100) + ', 100'"/>
-        </svg>
-        <span class="vs-kpi-ring-pct">{{ Math.round(data()!.totalCredit / (data()!.totalDebit + data()!.totalCredit || 1) * 100) }}%</span>
-      </div>
-      <span class="vs-kpi-ring-label">Total Crédit</span>
-      <span class="vs-kpi-ring-value vs-amount-credit">{{ formatAmount(data()!.totalCredit) }} <span class="vs-kpi-ring-unit">Ar</span></span>
-    </div>
-    <div class="vs-kpi-ring-card">
-      <div class="vs-kpi-ring-wrap">
-        <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
-          <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9"/>
-          <circle class="vs-kpi-ring-fill" cx="18" cy="18" r="15.9"
-            [attr.stroke]="data()!.balance >= 0 ? 'var(--primary)' : 'var(--danger)'"
-            [attr.stroke-dasharray]="(data()!.totalDebit + data()!.totalCredit > 0 ? Math.min(100, Math.round(Math.abs(data()!.balance) / Math.max(data()!.totalDebit, data()!.totalCredit, 1) * 100)) : 0) + ', 100'"/>
-        </svg>
-        <span class="vs-kpi-ring-pct">{{ data()!.totalDebit + data()!.totalCredit > 0 ? Math.min(100, Math.round(Math.abs(data()!.balance) / Math.max(data()!.totalDebit, data()!.totalCredit, 1) * 100)) : 0 }}%</span>
-      </div>
-      <span class="vs-kpi-ring-label">Solde</span>
-      <span class="vs-kpi-ring-value" [class]="data()!.balance >= 0 ? 'vs-amount-credit' : 'vs-amount-debit'">{{ formatAmount(data()!.balance) }} <span class="vs-kpi-ring-unit">Ar</span></span>
-    </div>
-  </div>
+    <!-- Export Confirmation Modal -->
+    @if (showExportConfirm()) {
+        <div class="vs-modal-overlay" (click)="cancelExport()">
+            <div class="vs-modal vs-modal-sm" (click)="$event.stopPropagation()">
+                <div class="vs-modal-header">
+                    <div>
+                        <div class="vs-modal-title">{{ pendingExportUrl().includes('csv') ? 'Export CSV' : 'Export PDF' }}</div>
+                        <div class="vs-modal-sub">Télécharger le fichier d'export</div>
+                    </div>
+                    <button class="vs-btn vs-btn-ghost vs-btn-sm" (click)="cancelExport()" style="padding: 6px">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        >
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="vs-modal-body">
+                    <p style="color: var(--text-muted); font-size: 0.875rem">
+                        Voulez-vous exporter toutes vos opérations au format
+                        <strong>{{ pendingExportUrl().includes('csv') ? 'CSV' : 'PDF' }}</strong> ?
+                    </p>
+                </div>
+                <div class="vs-modal-footer">
+                    <button class="vs-btn vs-btn-outline" (click)="cancelExport()">Annuler</button>
+                    <button class="vs-btn vs-btn-primary" (click)="doExport()">
+                        <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
+                        Télécharger
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
 
-  <!-- Ledger Table -->
-  <div class="vs-table-wrap">
-    <table class="vs-table vs-table-ledger-mobile">
-      <thead>
-        <tr>
-          <th style="width:40px;">#</th>
-          <th>Date</th>
-          <th>Libellé</th>
-          <th class="text-right">Débit</th>
-          <th class="text-right">Crédit</th>
-          <th class="text-right">Solde cumulé</th>
-        </tr>
-      </thead>
-      <tbody>
-        @if (data()!.operations.length === 0) {
-          <tr>
-            <td colspan="6" style="text-align:center;padding:3rem;color:var(--text-muted);">
-              Aucune opération enregistrée
-            </td>
-          </tr>
-        }
-        @for (op of data()!.operations; track op.id; let i = $index) {
-          <tr>
-            <td style="color:var(--text-light);font-size:0.72rem;font-weight:500;">{{ i + 1 }}</td>
-            <td class="vs-td-date">{{ op.date | date:'dd/MM/yyyy' }}</td>
-            <td>
-              <div class="vs-td-label"><strong>{{ op.label }}</strong></div>
-              @if (op.notes) {
-                <div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">{{ op.notes }}</div>
-              }
-            </td>
-            <td class="text-right">
-              @if (op.debit > 0) {
-                <span class="vs-amount-debit">{{ formatAmount(op.debit) }}</span>
-              } @else {
-                <span class="vs-td-empty">—</span>
-              }
-            </td>
-            <td class="text-right">
-              @if (op.credit > 0) {
-                <span class="vs-amount-credit">{{ formatAmount(op.credit) }}</span>
-              } @else {
-                <span class="vs-td-empty">—</span>
-              }
-            </td>
-            <td class="text-right">
-              <span [class]="runningBalance(i) >= 0 ? 'vs-amount-balance-pos' : 'vs-amount-balance-neg'">
-                {{ formatAmount(runningBalance(i)) }}
-              </span>
-            </td>
-          </tr>
-        }
-      </tbody>
-      @if (data()!.operations.length > 0) {
-        <tfoot>
-          <tr>
-            <td class="vs-tfoot-cell" colspan="3">
-              <span class="vs-table-footer-label">Totaux</span>
-            </td>
-            <td class="vs-tfoot-cell text-right">
-              <span class="vs-amount-debit">{{ formatAmount(data()!.totalDebit) }}</span>
-            </td>
-            <td class="vs-tfoot-cell text-right">
-              <span class="vs-amount-credit">{{ formatAmount(data()!.totalCredit) }}</span>
-            </td>
-            <td class="vs-tfoot-cell text-right">
-              <span [class]="data()!.balance >= 0 ? 'vs-amount-balance-pos' : 'vs-amount-balance-neg'">
-                {{ formatAmount(data()!.balance) }}
-              </span>
-            </td>
-          </tr>
-        </tfoot>
-      }
-    </table>
-  </div>
-}
+    @if (isLoading()) {
+        <div class="vs-page-loader">
+            <div class="vs-spinner vs-spinner-dark"></div>
+        </div>
+    } @else if (data()) {
+        <!-- Summary Cards -->
+        <div class="vs-kpi-ring-grid">
+            <div class="vs-kpi-ring-card">
+                <div class="vs-kpi-ring-wrap">
+                    <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+                        <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9" />
+                        <circle
+                            class="vs-kpi-ring-fill"
+                            cx="18"
+                            cy="18"
+                            r="15.9"
+                            stroke="var(--danger)"
+                            [attr.stroke-dasharray]="
+                                Math.round((data()!.totalDebit / (data()!.totalDebit + data()!.totalCredit || 1)) * 100) + ', 100'
+                            "
+                        />
+                    </svg>
+                    <span class="vs-kpi-ring-pct"
+                        >{{ Math.round((data()!.totalDebit / (data()!.totalDebit + data()!.totalCredit || 1)) * 100) }}%</span
+                    >
+                </div>
+                <span class="vs-kpi-ring-label">Total Débit</span>
+                <span class="vs-kpi-ring-value vs-amount-debit"
+                    >{{ formatAmount(data()!.totalDebit) }} <span class="vs-kpi-ring-unit">Ar</span></span
+                >
+            </div>
+            <div class="vs-kpi-ring-card">
+                <div class="vs-kpi-ring-wrap">
+                    <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+                        <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9" />
+                        <circle
+                            class="vs-kpi-ring-fill"
+                            cx="18"
+                            cy="18"
+                            r="15.9"
+                            stroke="var(--success)"
+                            [attr.stroke-dasharray]="
+                                Math.round((data()!.totalCredit / (data()!.totalDebit + data()!.totalCredit || 1)) * 100) +
+                                ', 100'
+                            "
+                        />
+                    </svg>
+                    <span class="vs-kpi-ring-pct"
+                        >{{ Math.round((data()!.totalCredit / (data()!.totalDebit + data()!.totalCredit || 1)) * 100) }}%</span
+                    >
+                </div>
+                <span class="vs-kpi-ring-label">Total Crédit</span>
+                <span class="vs-kpi-ring-value vs-amount-credit"
+                    >{{ formatAmount(data()!.totalCredit) }} <span class="vs-kpi-ring-unit">Ar</span></span
+                >
+            </div>
+            <div class="vs-kpi-ring-card">
+                <div class="vs-kpi-ring-wrap">
+                    <svg viewBox="0 0 36 36" class="vs-kpi-ring-svg">
+                        <circle class="vs-kpi-ring-bg" cx="18" cy="18" r="15.9" />
+                        <circle
+                            class="vs-kpi-ring-fill"
+                            cx="18"
+                            cy="18"
+                            r="15.9"
+                            [attr.stroke]="data()!.balance >= 0 ? 'var(--primary)' : 'var(--danger)'"
+                            [attr.stroke-dasharray]="
+                                (data()!.totalDebit + data()!.totalCredit > 0
+                                    ? Math.min(
+                                          100,
+                                          Math.round(
+                                              (Math.abs(data()!.balance) / Math.max(data()!.totalDebit, data()!.totalCredit, 1)) *
+                                                  100
+                                          )
+                                      )
+                                    : 0) + ', 100'
+                            "
+                        />
+                    </svg>
+                    <span class="vs-kpi-ring-pct"
+                        >{{
+                            data()!.totalDebit + data()!.totalCredit > 0
+                                ? Math.min(
+                                      100,
+                                      Math.round(
+                                          (Math.abs(data()!.balance) / Math.max(data()!.totalDebit, data()!.totalCredit, 1)) * 100
+                                      )
+                                  )
+                                : 0
+                        }}%</span
+                    >
+                </div>
+                <span class="vs-kpi-ring-label">Solde</span>
+                <span class="vs-kpi-ring-value" [class]="data()!.balance >= 0 ? 'vs-amount-credit' : 'vs-amount-debit'"
+                    >{{ formatAmount(data()!.balance) }} <span class="vs-kpi-ring-unit">Ar</span></span
+                >
+            </div>
+        </div>
+
+        <!-- Ledger Table -->
+        <div class="vs-table-wrap">
+            <table class="vs-table vs-table-ledger-mobile">
+                <thead>
+                    <tr>
+                        <th style="width: 40px">#</th>
+                        <th>Date</th>
+                        <th>Libellé</th>
+                        <th class="text-right">Débit</th>
+                        <th class="text-right">Crédit</th>
+                        <th class="text-right">Solde cumulé</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (data()!.operations.length === 0) {
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 3rem; color: var(--text-muted)">
+                                Aucune opération enregistrée
+                            </td>
+                        </tr>
+                    }
+                    @for (op of data()!.operations; track op.id; let i = $index) {
+                        <tr>
+                            <td style="color: var(--text-light); font-size: 0.72rem; font-weight: 500">{{ i + 1 }}</td>
+                            <td class="vs-td-date">{{ op.date | date: 'dd/MM/yyyy' }}</td>
+                            <td>
+                                <div class="vs-td-label">
+                                    <strong>{{ op.label }}</strong>
+                                </div>
+                                @if (op.notes) {
+                                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px">
+                                        {{ op.notes }}
+                                    </div>
+                                }
+                            </td>
+                            <td class="text-right">
+                                @if (op.debit > 0) {
+                                    <span class="vs-amount-debit">{{ formatAmount(op.debit) }}</span>
+                                } @else {
+                                    <span class="vs-td-empty">—</span>
+                                }
+                            </td>
+                            <td class="text-right">
+                                @if (op.credit > 0) {
+                                    <span class="vs-amount-credit">{{ formatAmount(op.credit) }}</span>
+                                } @else {
+                                    <span class="vs-td-empty">—</span>
+                                }
+                            </td>
+                            <td class="text-right">
+                                <span [class]="runningBalance(i) >= 0 ? 'vs-amount-balance-pos' : 'vs-amount-balance-neg'">
+                                    {{ formatAmount(runningBalance(i)) }}
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                @if (data()!.operations.length > 0) {
+                    <tfoot>
+                        <tr>
+                            <td class="vs-tfoot-cell" colspan="3">
+                                <span class="vs-table-footer-label">Totaux</span>
+                            </td>
+                            <td class="vs-tfoot-cell text-right">
+                                <span class="vs-amount-debit">{{ formatAmount(data()!.totalDebit) }}</span>
+                            </td>
+                            <td class="vs-tfoot-cell text-right">
+                                <span class="vs-amount-credit">{{ formatAmount(data()!.totalCredit) }}</span>
+                            </td>
+                            <td class="vs-tfoot-cell text-right">
+                                <span [class]="data()!.balance >= 0 ? 'vs-amount-balance-pos' : 'vs-amount-balance-neg'">
+                                    {{ formatAmount(data()!.balance) }}
+                                </span>
+                            </td>
+                        </tr>
+                    </tfoot>
+                }
+            </table>
+        </div>
+    }
 </div>

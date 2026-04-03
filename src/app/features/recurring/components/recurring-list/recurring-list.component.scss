@@ -3,37 +3,144 @@
 ════════════════════════════════════════ */
 
 .rc-list {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius-lg); overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
 }
 .rc-row {
-  display: flex; align-items: center; gap: 0.875rem;
-  padding: 0.875rem 1.125rem; transition: background 0.12s;
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.875rem 1.125rem;
+    transition: background 0.12s;
 }
-.rc-row:hover { background: var(--surface-hover, #f9fafb); }
-.rc-row.inactive { opacity: 0.5; }
+.rc-row:hover {
+    background: var(--surface-hover);
+}
+.rc-row.inactive {
+    opacity: 0.5;
+}
 
 .rc-dot {
-  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 2px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 2px;
 }
-.rc-dot-debit  { background: var(--danger); }
-.rc-dot-credit { background: var(--success); }
+.rc-dot-debit {
+    background: var(--danger);
+}
+.rc-dot-credit {
+    background: var(--success);
+}
 
-.rc-divider { height: 1px; background: var(--border); margin: 0 1.125rem; }
+.rc-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 1.125rem;
+}
 
-.rc-info  { flex: 1; min-width: 0; }
-.rc-label { font-size: 0.875rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.2rem; }
-.rc-meta  { display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap; }
+.rc-info {
+    flex: 1;
+    min-width: 0;
+}
+.rc-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.2rem;
+}
+.rc-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+}
 
-.rc-freq  { font-size: 0.7rem; color: var(--text-muted); font-weight: 500; }
-.rc-sep   { font-size: 0.65rem; color: var(--border); }
-.rc-next  { font-size: 0.7rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.2rem; }
-.rc-notes { font-size: 0.7rem; color: var(--text-muted); font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
+.rc-freq {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+.rc-sep {
+    font-size: 0.65rem;
+    color: var(--border);
+}
+.rc-next {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+.rc-notes {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;
+}
 .rc-inactive-tag {
-  font-size: 0.62rem; font-weight: 600; padding: 0.1rem 0.45rem;
-  border-radius: 99px; background: var(--surface-hover, #f3f4f6); color: var(--text-muted);
+    font-size: 0.62rem;
+    font-weight: 600;
+    padding: 0.1rem 0.45rem;
+    border-radius: 99px;
+    background: var(--surface-hover);
+    color: var(--text-muted);
 }
 
-.rc-right   { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
-.rc-amount  { font-size: 0.95rem; font-weight: 700; white-space: nowrap; min-width: 100px; text-align: right; }
-.rc-actions { display: flex; align-items: center; gap: 4px; }
+.rc-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+.rc-amount {
+    font-size: 0.95rem;
+    font-weight: 700;
+    white-space: nowrap;
+    min-width: 100px;
+    text-align: right;
+}
+.rc-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE — ≤ 768px  (Mobile)
+════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+    .rc-row {
+        flex-wrap: wrap;
+        padding: 0.75rem 1rem;
+        gap: 0.5rem;
+    }
+    .rc-notes {
+        max-width: 100%;
+        flex-basis: 100%;
+    }
+    .rc-right {
+        flex-shrink: 1;
+        flex-basis: 100%;
+        justify-content: space-between;
+    }
+    .rc-amount {
+        min-width: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .rc-row {
+        padding: 0.75rem 0.875rem;
+    }
+    .rc-amount {
+        font-size: 0.875rem;
+    }
+}
