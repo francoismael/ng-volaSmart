@@ -51,11 +51,17 @@
 ════════════════════════════════════════ */
 
 @media (max-width: 768px) {
-    .vs-period-stats {
-        flex-direction: column;
+    .vs-period-stat {
+        padding: 0.75rem;
+        gap: 0.5rem;
     }
-    .vs-period-stat-divider {
-        width: 100%;
-        height: 1px;
+    .vs-period-stat-value {
+        font-size: 0.9rem;
+    }
+    .vs-td-date {
+        font-size: 0.8rem;
+        letter-spacing: -0.03em;
+        padding-left: 0.5rem;
+        padding-right: 0.25rem;
     }
 }
