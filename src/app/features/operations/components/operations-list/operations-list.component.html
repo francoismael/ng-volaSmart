@@ -163,35 +163,33 @@
         </button>
     </div>
 
-    <!-- Custom date filter (collapsible) -->
+    <!-- Custom date filter (modal) -->
     @if (showCustomFilter()) {
-        <div class="vs-filter-bar">
-            <div class="vs-form-group" style="margin: 0; min-width: 150px; flex: 1">
-                <label class="vs-label">Date début</label>
-                <input [(ngModel)]="filterStartDate" type="date" class="vs-input" />
-            </div>
-            <div class="vs-form-group" style="margin: 0; min-width: 150px; flex: 1">
-                <label class="vs-label">Date fin</label>
-                <input [(ngModel)]="filterEndDate" type="date" class="vs-input" />
-            </div>
-            <div class="vs-filter-actions">
-                <button class="vs-btn vs-btn-primary" (click)="applyCustomFilter()">Appliquer</button>
-                <button class="vs-btn vs-btn-outline" (click)="clearFilters()">
-                    <svg
-                        width="13"
-                        height="13"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <polyline points="1 4 1 10 7 10" />
-                        <path d="M3.51 15a9 9 0 1 0 .49-3.65" />
-                    </svg>
-                    Réinitialiser
-                </button>
+        <div class="vs-modal-overlay" (click)="showCustomFilter.set(false)">
+            <div class="vs-modal vs-modal-sm" (click)="$event.stopPropagation()">
+                <div class="vs-modal-header">
+                    <div class="vs-modal-title">Filtre personnalisé</div>
+                    <button class="vs-btn vs-btn-ghost vs-btn-sm" (click)="showCustomFilter.set(false)" style="padding: 6px">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="vs-modal-body">
+                    <div class="vs-form-group">
+                        <label class="vs-label">Date début</label>
+                        <input [(ngModel)]="filterStartDate" type="date" class="vs-input" />
+                    </div>
+                    <div class="vs-form-group" style="margin-bottom: 0">
+                        <label class="vs-label">Date fin</label>
+                        <input [(ngModel)]="filterEndDate" type="date" class="vs-input" />
+                    </div>
+                </div>
+                <div class="vs-modal-footer">
+                    <button class="vs-btn vs-btn-outline" (click)="showCustomFilter.set(false)">Annuler</button>
+                    <button class="vs-btn vs-btn-primary" (click)="applyCustomFilter(); showCustomFilter.set(false)">Appliquer</button>
+                </div>
             </div>
         </div>
     }
@@ -277,7 +275,7 @@
                                     <span class="vs-td-empty">—</span>
                                 }
                             </td>
-                            <td (click)="$event.stopPropagation()">
+                            <td class="vs-td-actions" (click)="$event.stopPropagation()">
                                 <div class="vs-row-actions">
                                     <button class="vs-icon-btn" (click)="openEdit(op)" title="Modifier">
                                         <svg
