@@ -3,6 +3,7 @@ import { DatePipe } from '@angular/common';
 import { LedgerService, LedgerData } from '../../services/ledger.service';
 import { ToastService } from '../../../../core/services/toast.service';
 import { formatAmount } from '../../../../core/utils/format.utils';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
     selector: 'app-ledger',
@@ -20,8 +21,8 @@ export class LedgerComponent implements OnInit {
     pendingExportUrl = signal('');
 
     readonly exportLinks = [
-        { label: 'Export CSV', url: 'http://localhost:3000/export/csv' },
-        { label: 'Export PDF', url: 'http://localhost:3000/export/pdf' },
+        { label: 'Export CSV', url: `${environment.apiUrl}/export/csv` },
+        { label: 'Export PDF', url: `${environment.apiUrl}/export/pdf` },
     ];
 
     ngOnInit() {

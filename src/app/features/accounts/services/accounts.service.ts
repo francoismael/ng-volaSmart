@@ -2,12 +2,13 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Account } from '../models/account.model';
+import { environment } from '../../../../environments/environment';
 
 /** Service de gestion des comptes bancaires (CRUD). */
 @Injectable({ providedIn: 'root' })
 export class AccountsService {
     private http = inject(HttpClient);
-    private apiUrl = 'http://localhost:3000/accounts';
+    private apiUrl = `${environment.apiUrl}/accounts`;
 
     /**
      * Recupere la liste de tous les comptes.

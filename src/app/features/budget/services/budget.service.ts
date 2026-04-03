@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 export interface BudgetLine {
     category: string;
@@ -20,7 +21,7 @@ export interface BudgetSummaryItem {
 @Injectable({ providedIn: 'root' })
 export class BudgetService {
     private http = inject(HttpClient);
-    private base = 'http://localhost:3000/budgets';
+    private base = `${environment.apiUrl}/budgets`;
 
     /**
      * Recupere le resume budgetaire pour un mois donne.

@@ -2,12 +2,13 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 /** Service d'authentification gerant l'inscription, la connexion, la deconnexion et le profil utilisateur. */
 @Injectable({ providedIn: 'root' })
 export class AuthService {
     private http = inject(HttpClient);
-    private apiUrl = 'http://localhost:3000/auth';
+    private apiUrl = `${environment.apiUrl}/auth`;
 
     /**
      * Inscrit un nouvel utilisateur.

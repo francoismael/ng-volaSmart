@@ -2,6 +2,7 @@ import { Component, inject, signal, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../../../../core/services/toast.service';
+import { environment } from '../../../../../environments/environment';
 
 interface ProfileData {
     username: string;
@@ -35,7 +36,7 @@ export class ProfileComponent implements OnInit {
     passwordLoading = signal(false);
 
     ngOnInit() {
-        this.http.get<ProfileData>('http://localhost:3000/auth/profile').subscribe({
+        this.http.get<ProfileData>(`${environment.apiUrl}/auth/profile`).subscribe({
             next: (p) => {
                 this.username.set(p.username);
                 this.email.set(p.email);
@@ -50,7 +51,7 @@ export class ProfileComponent implements OnInit {
     saveProfile() {
         this.profileLoading.set(true);
         this.http
-            .patch<ProfileData>('http://localhost:3000/auth/profile', {
+            .patch<ProfileData>(`${environment.apiUrl}/auth/profile`, {
                 username: this.usernameInput,
                 email: this.emailInput,
                 initialBalance: this.initialBalanceInput,
@@ -86,7 +87,7 @@ export class ProfileComponent implements OnInit {
         }
         this.passwordLoading.set(true);
         this.http
-            .patch('http://localhost:3000/auth/profile/password', {
+            .patch(`${environment.apiUrl}/auth/profile/password`, {
                 currentPassword: this.currentPassword,
                 newPassword: this.newPassword,
             })

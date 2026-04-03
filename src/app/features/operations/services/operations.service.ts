@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Operation } from '../models/operation.model';
+import { environment } from '../../../../environments/environment';
 
 export interface PaginatedOperations {
     data: Operation[];
@@ -16,7 +17,7 @@ export interface PaginatedOperations {
 @Injectable({ providedIn: 'root' })
 export class OperationsService {
     private http = inject(HttpClient);
-    private apiUrl = 'http://localhost:3000/operations';
+    private apiUrl = `${environment.apiUrl}/operations`;
 
     /**
      * Recupere toutes les operations, avec filtrage optionnel par date.

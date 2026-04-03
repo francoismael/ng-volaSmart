@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 /** Donnees agrégées du tableau de bord (soldes, totaux par période, opérations récentes). */
 export interface DashboardData {
@@ -51,6 +52,6 @@ export class DashboardService {
      * @returns {Observable<DashboardData>} Les données du tableau de bord
      */
     getDashboard(): Observable<DashboardData> {
-        return this.http.get<DashboardData>('http://localhost:3000/dashboard');
+        return this.http.get<DashboardData>(`${environment.apiUrl}/dashboard`);
     }
 }

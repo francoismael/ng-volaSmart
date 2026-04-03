@@ -1,12 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RecurringOperation } from '../models/recurring.model';
+import { environment } from '../../../../environments/environment';
 
 /** Service de gestion des operations recurrentes (abonnements, prelevements automatiques). */
 @Injectable({ providedIn: 'root' })
 export class RecurringService {
     private http = inject(HttpClient);
-    private base = 'http://localhost:3000/recurring';
+    private base = `${environment.apiUrl}/recurring`;
 
     /**
      * Recupere toutes les operations recurrentes.

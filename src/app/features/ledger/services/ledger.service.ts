@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Operation } from '../../operations/models/operation.model';
+import { environment } from '../../../../environments/environment';
 
 /** Données du grand livre : liste des opérations et totaux. */
 export interface LedgerData {
@@ -25,6 +26,6 @@ export class LedgerService {
      * @returns {Observable<LedgerData>} Les opérations et totaux du grand livre
      */
     getLedger(): Observable<LedgerData> {
-        return this.http.get<LedgerData>('http://localhost:3000/ledger');
+        return this.http.get<LedgerData>(`${environment.apiUrl}/ledger`);
     }
 }
