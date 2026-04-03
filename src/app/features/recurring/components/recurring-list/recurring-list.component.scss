@@ -109,7 +109,10 @@
 .rc-actions {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 0;
+}
+.rc-actions .vs-toggle {
+    margin-right: 8px;
 }
 
 /* ════════════════════════════════════════
@@ -133,6 +136,9 @@
     }
     .rc-amount {
         min-width: 0;
+    }
+    .rc-actions .vs-toggle {
+        margin-right: 16px;
     }
 }
 
