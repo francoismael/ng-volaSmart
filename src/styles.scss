@@ -1451,20 +1451,12 @@ a {
         font-size: 1.1rem;
     }
 
-    /* Modal: bottom-sheet style on small phones */
+    /* Modal: centered, compact padding on small phones */
     .vs-modal-overlay {
         padding: 0.5rem;
-        align-items: flex-end;
     }
     .vs-modal {
         max-height: 95vh;
-        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    }
-    /* Small modals (logout, confirm) stay centered */
-    .vs-modal-overlay:has(.vs-modal-sm) {
-        align-items: center;
-    }
-    .vs-modal-sm {
         border-radius: var(--radius-lg);
     }
     .vs-modal-header {
