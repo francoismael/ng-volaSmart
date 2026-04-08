@@ -1,45 +1,58 @@
 <div class="vs-auth-wrap">
+    <!-- Left Panel — Blue gradient with brand -->
     <div class="vs-auth-left">
-        <div class="vs-auth-card">
-            <div class="vs-auth-logo">
-                <div class="vs-auth-logo-icon">
-                    <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M4 6 L14 26 L16 22 L18 26 L28 6"
-                            stroke="white"
-                            stroke-width="3.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            fill="none"
-                        />
-                        <circle cx="16" cy="27" r="2" fill="#93C5FD" />
+        <div class="vs-auth-left-content">
+            <div class="vs-auth-brand">
+                <div class="vs-auth-brand-icon">
+                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 6 L14 26 L16 22 L18 26 L28 6" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <circle cx="16" cy="27" r="2" fill="#93C5FD"/>
                     </svg>
                 </div>
-                <div>
-                    <div class="vs-auth-logo-text">VolaSmart</div>
-                    <div class="vs-auth-logo-sub">Gestion financière intelligente</div>
-                </div>
+                <div class="vs-auth-brand-name">VolaSmart</div>
             </div>
+            <p class="vs-auth-desc">
+                Suivez vos revenus, dépenses et solde en temps réel avec une interface moderne et intuitive.
+            </p>
+        </div>
 
+        <!-- 3-layer cloud right edge (desktop) — wide soft bumps -->
+        <div class="vs-auth-edge-right">
+            <svg class="vs-edge-layer" viewBox="0 0 200 1000" preserveAspectRatio="none">
+                <path d="M200,0 L200,1000 L80,1000 C80,1000 80,900 20,800 C-40,700 80,600 80,500 C80,400 -40,300 20,200 C80,100 80,0 80,0 Z" fill="white" fill-opacity="0.12"/>
+            </svg>
+            <svg class="vs-edge-layer" viewBox="0 0 200 1000" preserveAspectRatio="none">
+                <path d="M200,0 L200,1000 L120,1000 C120,1000 120,920 60,820 C0,720 120,620 120,500 C120,380 0,280 60,180 C120,80 120,0 120,0 Z" fill="white" fill-opacity="0.25"/>
+            </svg>
+            <svg class="vs-edge-layer" viewBox="0 0 200 1000" preserveAspectRatio="none">
+                <path d="M200,0 L200,1000 L150,1000 C150,1000 150,910 100,820 C50,730 150,640 150,500 C150,360 50,270 100,180 C150,90 150,0 150,0 Z" fill="white"/>
+            </svg>
+        </div>
+
+        <!-- 3-layer cloud bottom edge (mobile) — wide soft bumps -->
+        <div class="vs-auth-edge-bottom">
+            <svg class="vs-edge-layer-h" viewBox="0 0 1000 200" preserveAspectRatio="none">
+                <path d="M0,200 L1000,200 L1000,80 C1000,80 900,80 800,20 C700,-40 600,80 500,80 C400,80 300,-40 200,20 C100,80 0,80 0,80 Z" fill="white" fill-opacity="0.12"/>
+            </svg>
+            <svg class="vs-edge-layer-h" viewBox="0 0 1000 200" preserveAspectRatio="none">
+                <path d="M0,200 L1000,200 L1000,120 C1000,120 920,120 820,60 C720,0 620,120 500,120 C380,120 280,0 180,60 C80,120 0,120 0,120 Z" fill="white" fill-opacity="0.25"/>
+            </svg>
+            <svg class="vs-edge-layer-h" viewBox="0 0 1000 200" preserveAspectRatio="none">
+                <path d="M0,200 L1000,200 L1000,150 C1000,150 910,150 820,100 C730,50 640,150 500,150 C360,150 270,50 180,100 C90,150 0,150 0,150 Z" fill="white"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Right Panel — Login form -->
+    <div class="vs-auth-right">
+        <div class="vs-auth-card">
             <h1 class="vs-auth-title">Bon retour !</h1>
             <p class="vs-auth-subtitle">Connectez-vous à votre espace financier</p>
 
             @if (error()) {
                 <div class="vs-alert vs-alert-danger">
-                    <svg
-                        width="15"
-                        height="15"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        style="flex-shrink: 0"
-                    >
-                        <circle cx="12" cy="12" r="10" />
-                        <line x1="12" y1="8" x2="12" y2="12" />
-                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0">
+                        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
                     </svg>
                     {{ error() }}
                 </div>
@@ -50,28 +63,11 @@
                     <label class="vs-label">Nom d'utilisateur</label>
                     <div class="vs-input-wrap">
                         <span class="vs-input-icon">
-                            <svg
-                                width="15"
-                                height="15"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                                <circle cx="12" cy="7" r="4" />
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
                             </svg>
                         </span>
-                        <input
-                            [(ngModel)]="username"
-                            name="username"
-                            type="text"
-                            class="vs-input"
-                            placeholder="nom d'utilisateur"
-                            autocomplete="username"
-                        />
+                        <input [(ngModel)]="username" name="username" type="text" class="vs-input" placeholder="nom d'utilisateur" autocomplete="username"/>
                     </div>
                 </div>
 
@@ -79,175 +75,38 @@
                     <label class="vs-label">Mot de passe</label>
                     <div class="vs-input-wrap">
                         <span class="vs-input-icon">
-                            <svg
-                                width="15"
-                                height="15"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                             </svg>
                         </span>
-                        <input
-                            [(ngModel)]="password"
-                            name="password"
-                            [type]="showPassword() ? 'text' : 'password'"
-                            class="vs-input"
-                            placeholder="mot de passe"
-                            autocomplete="current-password"
-                            style="padding-right: 2.75rem"
-                        />
+                        <input [(ngModel)]="password" name="password" [type]="showPassword() ? 'text' : 'password'" class="vs-input" placeholder="mot de passe" autocomplete="current-password" style="padding-right: 2.75rem"/>
                         <button type="button" class="vs-input-suffix" (click)="togglePassword()">
                             @if (showPassword()) {
-                                <svg
-                                    width="16"
-                                    height="16"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                >
-                                    <path
-                                        d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
-                                    />
-                                    <line x1="1" y1="1" x2="23" y2="23" />
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                                    <line x1="1" y1="1" x2="23" y2="23"/>
                                 </svg>
                             } @else {
-                                <svg
-                                    width="16"
-                                    height="16"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                >
-                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                                    <circle cx="12" cy="12" r="3" />
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
                                 </svg>
                             }
                         </button>
                     </div>
                 </div>
 
-                <button type="submit" class="vs-btn vs-btn-primary vs-btn-lg vs-btn-block" [disabled]="isLoading()">
-                    @if (isLoading()) {
-                        <span class="vs-spinner"></span> Connexion...
-                    } @else {
-                        Connexion
-                        <svg
-                            width="15"
-                            height="15"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <line x1="5" y1="12" x2="19" y2="12" />
-                            <polyline points="12 5 19 12 12 19" />
-                        </svg>
-                    }
-                </button>
+                <div class="vs-auth-actions">
+                    <button type="submit" class="vs-btn vs-btn-primary vs-btn-lg" [disabled]="isLoading()">
+                        @if (isLoading()) {
+                            <span class="vs-spinner"></span> Connexion...
+                        } @else {
+                            Connexion
+                        }
+                    </button>
+                    <a routerLink="/auth/register" class="vs-btn-outline-auth">Créer un compte</a>
+                </div>
             </form>
 
-            <div class="vs-auth-footer">
-                Pas encore de compte ?
-                <a routerLink="/auth/register">Créer un compte</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="vs-auth-right">
-        <div class="vs-auth-right-content">
-            <div class="vs-auth-right-logo">
-                <svg width="42" height="42" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M4 6 L14 26 L16 22 L18 26 L28 6"
-                        stroke="white"
-                        stroke-width="3.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                    <circle cx="16" cy="27" r="2.2" fill="rgba(255,255,255,0.6)" />
-                </svg>
-            </div>
-            <h2 class="vs-auth-right-title">Maîtrisez vos finances</h2>
-            <p class="vs-auth-right-sub">Suivez vos revenus, dépenses et solde en temps réel avec une interface moderne.</p>
-            <div class="vs-auth-features">
-                <div class="vs-auth-feature">
-                    <div class="vs-auth-feature-icon">
-                        <svg
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="vs-auth-feature-title">Suivi en temps réel</div>
-                        <div class="vs-auth-feature-sub">Visualisez vos finances instantanément</div>
-                    </div>
-                </div>
-                <div class="vs-auth-feature">
-                    <div class="vs-auth-feature-icon">
-                        <svg
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="vs-auth-feature-title">Sécurisé</div>
-                        <div class="vs-auth-feature-sub">Données protégées</div>
-                    </div>
-                </div>
-                <div class="vs-auth-feature">
-                    <div class="vs-auth-feature-icon">
-                        <svg
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                            <polyline points="14 2 14 8 20 8" />
-                            <line x1="16" y1="13" x2="8" y2="13" />
-                            <line x1="16" y1="17" x2="8" y2="17" />
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="vs-auth-feature-title">Téléchargez vos rapports facilement</div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
