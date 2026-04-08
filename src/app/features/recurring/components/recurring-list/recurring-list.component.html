@@ -24,6 +24,7 @@
 </div>
 
 <!-- Summary KPIs -->
+@if (!isLoading()) {
 <div class="vs-kpi-ring-grid">
     <div class="vs-kpi-ring-card">
         <div class="vs-kpi-ring-wrap">
@@ -94,7 +95,7 @@
 </div>
 
 <!-- Filter tabs -->
-<div class="vs-period-bar" style="margin-bottom: 1.25rem">
+<div class="vs-period-bar" style="margin-bottom: 1.25rem" >
     <button class="vs-period-tab" [class.active]="filterType() === 'all'" (click)="filterType.set('all')">Tout</button>
     <button class="vs-period-tab" [class.active]="filterType() === 'debit'" (click)="filterType.set('debit')">
         <span style="color: var(--danger)">● </span>Dépenses
@@ -103,6 +104,7 @@
         <span style="color: var(--success)">● </span>Revenus
     </button>
 </div>
+}
 
 @if (isLoading()) {
     <div class="vs-page-loader"><div class="vs-spinner vs-spinner-dark"></div></div>

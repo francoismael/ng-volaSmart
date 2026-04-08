@@ -195,11 +195,11 @@
     }
 
     <!-- Table -->
-    @if (isLoading()) {
+    @if (isLoading() && !hasLoaded()) {
         <div class="vs-page-loader">
             <div class="vs-spinner vs-spinner-dark"></div>
         </div>
-    } @else if (operations().length === 0) {
+    } @else if (!isLoading() && operations().length === 0) {
         <div class="vs-empty-page">
             <div class="vs-empty-icon">
                 <svg
@@ -235,7 +235,12 @@
             </button>
         </div>
     } @else {
-        <div class="vs-table-wrap">
+        <div class="vs-table-wrap" style="position: relative">
+            @if (isLoading()) {
+                <div class="vs-table-loader">
+                    <div class="vs-spinner vs-spinner-dark"></div>
+                </div>
+            }
             <table class="vs-table">
                 <thead>
                     <tr>

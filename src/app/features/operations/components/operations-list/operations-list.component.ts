@@ -21,6 +21,7 @@ export class OperationsListComponent implements OnInit {
 
     operations = signal<Operation[]>([]);
     isLoading = signal(true);
+    hasLoaded = signal(false);
     showForm = signal(false);
     editingOp = signal<Operation | null>(null);
     deleteTarget = signal<Operation | null>(null);
@@ -120,10 +121,12 @@ export class OperationsListComponent implements OnInit {
                     this.totalDebit.set(res.totalDebit);
                     this.totalCredit.set(res.totalCredit);
                     this.isLoading.set(false);
+                    this.hasLoaded.set(true);
                 },
                 error: () => {
                     this.toast.error('Erreur chargement opérations');
                     this.isLoading.set(false);
+                    this.hasLoaded.set(true);
                 },
             });
     }
